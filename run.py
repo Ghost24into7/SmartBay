@@ -30,6 +30,11 @@ import signal
 import sys
 import os
 
+import gevent
+from gevent import monkey
+monkey.patch_all()
+
+
 def main():
     """
     Main launcher function.
@@ -70,4 +75,6 @@ def main():
         signal_handler(signal.SIGINT, None)
 
 if __name__ == '__main__':
-    main()
+    port = int(os.environ.get('PORT', 5000))
+    print(f"Starting Parking Management System on port {port}")
+    socketio.run(app, host='0.0.0.0', port=port)

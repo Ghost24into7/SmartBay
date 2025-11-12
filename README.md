@@ -188,7 +188,27 @@ graph TB
 4. **VIP System**: Manages monthly passes and special privileges
 5. **Receipt System**: Creates professional receipts with QR codes
 
-## Troubleshooting
+## Production Deployment
+
+### Deploying to Cloud Platforms (Render.com, Heroku, etc.)
+
+When deploying to production platforms like Render.com, you may encounter a Werkzeug security error. To fix this:
+
+1. **Modify the `socketio.run()` call** in `parking_service.py`:
+   ```python
+   socketio.run(app, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False, allow_unsafe_werkzeug=True)
+   ```
+
+2. **Environment Variables**:
+   - Set `PORT` environment variable (platform default, usually 5000)
+   - Ensure Python 3.8+ is used
+
+3. **Required Packages** for production:
+   ```bash
+   pip install flask flask-socketio python-socketio eventlet gunicorn
+   ```
+
+**Note**: The `allow_unsafe_werkzeug=True` parameter is required for Flask-SocketIO to work in production environments where Werkzeug's development server restrictions apply.
 
 ### System Won't Start
 
