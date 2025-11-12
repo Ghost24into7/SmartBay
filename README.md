@@ -1,4 +1,4 @@
-# Parking Management System - Complete Guide
+# Parking Management System 
 
 ## Welcome to the Parking Management System!
 
@@ -35,7 +35,7 @@ Imagine a parking lot with 186 parking spaces across 2 levels. This system:
 ### Step 1: Download the System
 
 1. Open your web browser
-2. Go to https://github.com (or wherever this code is hosted)
+2. Go to [https://github.com](https://github.com/Ghost24into7/AutoParq) (or wherever this code is hosted)
 3. Download the ZIP file or clone the repository
 4. Extract the ZIP file to a folder on your computer (like `C:\ParkingSystem` or `/home/user/ParkingSystem`)
 
@@ -65,13 +65,16 @@ If you don't have Python installed:
    ```
    pip install flask flask-socketio python-socketio eventlet
    ```
-
+   OR
+    ```
+   pip install requirements.txt
+   ```
 ### Step 4: Run the System
 
 1. In the command prompt/terminal, make sure you're in the correct folder
 2. Type this command and press Enter:
    ```
-   python parking_service.py
+   python run.py
    ```
 
 3. You should see messages like:
@@ -110,7 +113,7 @@ When you open the web page, you'll see:
 
 4. **Check Electric Vehicle**: If it's an electric car that needs charging
 
-5. **Click "Request Parking Slot"**
+5. **Click "Find Slot"**
 
 The system will:
 - Find the best available spot
@@ -169,15 +172,43 @@ Every parking receipt includes a QR code that can be:
 ## System Architecture
 
 ```mermaid
-graph TB
-    A[Web Browser] --> B[Flask Web Server]
-    B --> C[Socket.IO Real-Time Communication]
-    C --> D[Parking Lot Manager]
-    D --> E[Slot Allocation Engine]
-    D --> F[VIP Pass Manager]
-    D --> G[Receipt Generator]
-    H[Database in Memory] --> D
-    I[Vehicle Simulator Agent] --> B
+graph TD
+    A[User Opens Web Interface] --> B[Browser Loads Parking Dashboard]
+    B --> C[Real-Time Updates Enabled via Socket.IO]
+    C --> D{User Action}
+    
+    D -->|Find Slot| E[Vehicle Entry Process]
+    D -->|Release Vehicle| F[Vehicle Release Process]
+    D -->|View Status| G[Display Live Parking Status]
+    
+    E --> H[Slot Allocation Engine]
+    H --> I{Slot Available?}
+    I -->|Yes| J[Assign Slot & Generate Receipt]
+    I -->|No| K[Show Error: No Slots Available]
+    
+    J --> L[Update Visual Grid]
+    L --> M[Send Real-Time Update to All Users]
+    
+    F --> N[Validate Ticket]
+    N --> O{Ticket Valid?}
+    O -->|Yes| P[Calculate Fees & Generate Release Receipt]
+    O -->|No| Q[Show Error: Invalid Ticket]
+    
+    P --> R[Free Slot]
+    R --> S[Update Visual Grid]
+    S --> T[Send Real-Time Update to All Users]
+    
+    G --> U[Fetch Current Status from API]
+    U --> V[Display Statistics & Grid]
+    
+    K --> W[Log Error & Notify User]
+    Q --> W
+    W --> X[End Process]
+    
+    M --> Y[Process Complete]
+    T --> Y
+    V --> Y
+
 ```
 
 ### How It Works Internally
