@@ -71,7 +71,7 @@ If you don't have Python installed:
 1. In the command prompt/terminal, make sure you're in the correct folder
 2. Type this command and press Enter:
    ```
-   python parking_service.py
+   python run.py
    ```
 
 3. You should see messages like:
