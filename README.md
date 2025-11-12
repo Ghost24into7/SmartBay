@@ -35,7 +35,7 @@ Imagine a parking lot with 186 parking spaces across 2 levels. This system:
 ### Step 1: Download the System
 
 1. Open your web browser
-2. Go to https://github.com (or wherever this code is hosted)
+2. Go to [https://github.com](https://github.com/Ghost24into7/AutoParq) (or wherever this code is hosted)
 3. Download the ZIP file or clone the repository
 4. Extract the ZIP file to a folder on your computer (like `C:\ParkingSystem` or `/home/user/ParkingSystem`)
 
